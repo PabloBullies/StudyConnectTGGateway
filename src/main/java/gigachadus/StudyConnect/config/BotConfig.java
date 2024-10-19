@@ -8,13 +8,15 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Configuration
-@PropertySource("application.properties")
 public class BotConfig {
-    @Value("${bot.name}")
     String botName;
 
-    @Value("${bot.token}")
     String botToken;
+
+    public BotConfig(@Value("${bot.name}") String botName, @Value("${bot.token}") String botToken) {
+        this.botName = botName;
+        this.botToken = botToken;
+    }
 
     public String getBotName() {
         return botName;

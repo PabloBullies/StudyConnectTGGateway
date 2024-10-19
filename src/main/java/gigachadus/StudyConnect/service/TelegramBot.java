@@ -11,7 +11,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.List;
 
 @Component
-@PropertySource("application.properties")
 public class TelegramBot extends TelegramLongPollingBot {
     private final BotConfig config;
 
