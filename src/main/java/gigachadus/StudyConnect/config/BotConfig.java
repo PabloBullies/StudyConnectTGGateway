@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Configuration
 public class BotConfig {
-    String botName;
+    private final String botName;
 
-    String botToken;
+    private final String botToken;
 
     public BotConfig(@Value("${bot.name}") String botName, @Value("${bot.token}") String botToken) {
         this.botName = botName;
