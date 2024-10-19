@@ -1,8 +1,9 @@
 package gigachadus.StudyConnect.service;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class AccountManager {
     public String greeting(){
         String greeting_message = "Welcome to out monastery";

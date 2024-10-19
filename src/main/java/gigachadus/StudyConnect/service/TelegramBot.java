@@ -1,9 +1,6 @@
 package gigachadus.StudyConnect.service;
 
 import gigachadus.StudyConnect.config.BotConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -16,9 +13,9 @@ import java.util.List;
 @Component
 @PropertySource("application.properties")
 public class TelegramBot extends TelegramLongPollingBot {
-    final BotConfig config;
+    private final BotConfig config;
 
-    final AccountManager accountManager;
+    private final AccountManager accountManager;
 
     public TelegramBot(BotConfig config, AccountManager accountManager) {
         super(config.getBotToken());
