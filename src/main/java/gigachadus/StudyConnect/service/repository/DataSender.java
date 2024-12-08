@@ -197,4 +197,55 @@ public class DataSender {
         return response;
     }
 
+    public HttpResponse<String> matchMentor(String studentId, String mentorId) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = String.format("https://%s/matches/%s/mentors/%s",
+                botConfig.getMasterIp(), studentId, mentorId);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri((URI.create(url)))
+                .headers("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response;
+    }
+
+    public HttpResponse<String> matchStudent(String mentorId, String studentId, Boolean isApprove) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = String.format("https://%s/matches/%s/mentors/%s?isApprove=%s",
+                botConfig.getMasterIp(), mentorId, studentId, isApprove);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri((URI.create(url)))
+                .headers("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response;
+    }
+
+    public HttpResponse<String> getMatchingStudents(String mentorId) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = String.format("https://%s/matches/%s/students",
+                botConfig.getMasterIp(), mentorId);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri((URI.create(url)))
+                .headers("Content-Type", "application/json")
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response;
+    }
+    public HttpResponse<String> getMatchingMentors(String studentId) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = String.format("https://%s/matches/%s/mentors",
+                botConfig.getMasterIp(), studentId);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri((URI.create(url)))
+                .headers("Content-Type", "application/json")
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response;
+    }
 }

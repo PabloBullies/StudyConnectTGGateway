@@ -24,7 +24,7 @@ public class DiplomaTopicsState implements State {
 
         List<InlineKeyboardButton> rowInline2 = new ArrayList<>();
         rowInline2.add(InlineKeyboardButton.builder().text("Удалить тему").callbackData("/del_theme").build());
-        rowInline2.add(InlineKeyboardButton.builder().text("Закончить регистрацию").callbackData("/end").build());
+        rowInline2.add(InlineKeyboardButton.builder().text("Закончить редактирование").callbackData("/end").build());
 
         rowsInline.add((rowInline2));
 
@@ -69,7 +69,7 @@ public class DiplomaTopicsState implements State {
                     rowInline.add(InlineKeyboardButton.builder().text("Зарегистрироваться заново").callbackData("/registration").build());
                     rowsInline.add(rowInline);
                     inlineKeyboardMarkup.setKeyboard(rowsInline);
-                    telegramBot.sendMessage(chatId, "Закончить регистрацию?", inlineKeyboardMarkup);
+                    telegramBot.sendMessage(chatId, "Завершить?", inlineKeyboardMarkup);
                     break;
             }
 

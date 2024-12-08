@@ -14,33 +14,29 @@ public class DepartmentRegistrationState implements State {
     @Override
     public void questionState(Long chatId, TelegramBot telegramBot) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
 
-        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        rowInline.add(InlineKeyboardButton.builder().text("ФИТ").callbackData("/FIT").build());
-        rowInline.add(InlineKeyboardButton.builder().text("ФИЯ").callbackData("/FIJA").build());
+        for (Map.Entry<String, String> entry : StateConfiguration.allFaculties.entrySet()) {
+            String faculty = entry.getKey();
+            String tag = entry.getValue();
 
-        rowsInline.add(rowInline);
+            List<InlineKeyboardButton> rowInline = new ArrayList<>();
 
-        List<InlineKeyboardButton> rowInline2= new ArrayList<>();
-        rowInline2.add(InlineKeyboardButton.builder().text("ФФ").callbackData("/FF").build());
-        rowInline2.add(InlineKeyboardButton.builder().text("ММФ").callbackData("/MMF").build());
+            rowInline.add(InlineKeyboardButton.builder().text(faculty).callbackData(tag).build());
 
-        rowsInline.add(rowInline2);
+            rowsInline.add(rowInline);
 
-        List<InlineKeyboardButton> rowInline3 = new ArrayList<>();
-        rowInline3.add(InlineKeyboardButton.builder().text("ФЖ").callbackData("/FG").build());
-        rowInline3.add(InlineKeyboardButton.builder().text("ИИР").callbackData("/IIR").build());
+        }
 
-        rowsInline.add(rowInline3);
+        List<InlineKeyboardButton> rowInline2 = new ArrayList<>();
+        rowInline2.add(InlineKeyboardButton.builder().text("Закончил вводить").callbackData("/end").build());
 
+        rowsInline.add((rowInline2));
 
-        List<InlineKeyboardButton> rowInlineN = new ArrayList<>();
-        rowInlineN.add(InlineKeyboardButton.builder().text("Закончил вводить").callbackData("/end").build());
-        rowsInline.add(rowInlineN);
         inlineKeyboardMarkup.setKeyboard(rowsInline);
 
-        telegramBot.sendMessage(chatId, "Выбери свой факультет:", inlineKeyboardMarkup);
+        telegramBot.sendMessage(chatId, "Выбери свои факультет:", inlineKeyboardMarkup);
     }
 
     @Override
@@ -51,24 +47,6 @@ public class DepartmentRegistrationState implements State {
             Map<String, Object> data = telegramBot.getUserEnteredData(chatId);
             String department = (String) data.getOrDefault(StateConfiguration.DEPARTMENT_REGISTRATION_STATE, "");
             switch (callbackData) {
-                case "/FIT":
-                    department = callbackData;
-                    break;
-                case "/FIJA":
-                    department = callbackData;
-                    break;
-                case "/FF":
-                    department = callbackData;
-                    break;
-                case "/MMF":
-                    department = callbackData;
-                    break;
-                case "/FG":
-                    department = callbackData;
-                    break;
-                case "/IIR":
-                    department = callbackData;
-                    break;
                 case "/correct":
                     telegramBot.setCurrentState(chatId, StateConfiguration.INTERESTS_STATE);
                     break;
@@ -89,10 +67,13 @@ public class DepartmentRegistrationState implements State {
                     rowInline.add(InlineKeyboardButton.builder().text("Зарегистрироваться заново").callbackData("/registration").build());
                     rowsInline.add(rowInline);
                     inlineKeyboardMarkup.setKeyboard(rowsInline);
-                    telegramBot.sendMessage(chatId, "Всё верно?: " + department, inlineKeyboardMarkup);
+                    telegramBot.sendMessage(chatId, "Всё верно?: " + StateConfiguration.getKey(StateConfiguration.allFaculties, department), inlineKeyboardMarkup);
                     break;
+                default:
+                    if (StateConfiguration.allFaculties.containsValue(callbackData)){
+                        data.put(StateConfiguration.DEPARTMENT_REGISTRATION_STATE, callbackData);
+                    }
             }
-            data.put(StateConfiguration.DEPARTMENT_REGISTRATION_STATE, department);
         }
     }
 }

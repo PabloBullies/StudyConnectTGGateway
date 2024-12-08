@@ -13,7 +13,6 @@ public class FinishRegistrationState implements State {
     @Override
     public void questionState(Long chatId, TelegramBot telegramBot) {
         telegramBot.sendMessage(chatId, "Проверка корректности данных:");
-//        telegramBot.sendMessage(chatId, telegramBot.getUserEnteredData(chatId).toString());
         Map<String, Object> data = telegramBot.getUserEnteredData(chatId);
 
 

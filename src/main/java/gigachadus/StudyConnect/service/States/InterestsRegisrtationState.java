@@ -78,6 +78,7 @@ public class InterestsRegisrtationState implements State {
                     if (StateConfiguration.allScientificFields.containsValue(callbackData)){
                         interests.add(callbackData);
                     }
+
             }
             data.put(StateConfiguration.INTERESTS_STATE, interests);
         }

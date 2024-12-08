@@ -1,17 +1,14 @@
 package gigachadus.StudyConnect.service.States;
 
-import gigachadus.StudyConnect.config.BotConfig;
-import gigachadus.StudyConnect.service.States.StudentRegistration.InitiativeThemeState;
-import gigachadus.StudyConnect.service.States.StudentRegistration.SkillsRegistrationState;
-import gigachadus.StudyConnect.service.States.StudentRegistration.StudentMainState;
+import gigachadus.StudyConnect.service.States.StudentRegistration.*;
 import gigachadus.StudyConnect.service.States.TeacherRegistration.DeleteThemeState;
 import gigachadus.StudyConnect.service.States.TeacherRegistration.DiplomaTopicsState;
+import gigachadus.StudyConnect.service.States.TeacherRegistration.ShowApprovingStudents;
 import gigachadus.StudyConnect.service.States.TeacherRegistration.TeacherMainState;
 import gigachadus.StudyConnect.service.States.TeacherRegistration.ThemesRegistration.NeededSkillsNameState;
 import gigachadus.StudyConnect.service.States.TeacherRegistration.ThemesRegistration.ScientificFieldState;
 import gigachadus.StudyConnect.service.States.TeacherRegistration.ThemesRegistration.SummaryState;
 import gigachadus.StudyConnect.service.States.TeacherRegistration.ThemesRegistration.ThemeNameState;
-import gigachadus.StudyConnect.service.repository.DataSender;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,8 +31,11 @@ public class StateConfiguration {
     public static final String INTERESTS_STATE = "INTERESTS_STATE";
     public static final String STUD_SKILLS_STATE = "STUD_SKILLS_STATE";
     public static final String STUD_INIT_THEME_STATE = "STUD_INIT_THEME_STATE";
+    public static final String SHOW_ALL_MENTORS_STATE = "SHOW_ALL_MENTORS_STATE";
+    public static final String SHOW_ACCEPTED_MENTORS_STATE = "SHOW_ACCEPTED_MENTORS_STATE";
 
     public static final String TEACHER_MAIN_STATE = "TEACHER_MAIN_STATE";
+    public static final String SHOW_APPROVING_STUDENTS_STATE = "SHOW_APPROVING_STUDENTS_STATE";
 
 
     public static final String DIPLOMA_TOPICS_STATE = "DIPLOMA_TOPICS_STATE";
@@ -86,6 +86,15 @@ public class StateConfiguration {
             entry("Техническая грамотность", "/technical_literacy")
     );
 
+    public static final Map<String, String> allFaculties = Map.ofEntries(
+            entry("ФИТ", "/FIT"),
+            entry("ФИЯ", "/FIJA"),
+            entry("ФФ", "/FF"),
+            entry("ММФ", "/MMF"),
+            entry("ФЖ", "/FG"),
+            entry("ИИР", "/IIR")
+    );
+
     public static String getKey(Map<String, String> map, String val){
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getValue().equals(val)) {
@@ -100,11 +109,25 @@ public class StateConfiguration {
         return new FinishRegistrationState();
     }
 
+    @Bean(name = SHOW_APPROVING_STUDENTS_STATE)
+    public State show_approving_students_state(){
+        return new ShowApprovingStudents();
+    }
+
     @Bean(name = DELETE_TOPIC_STATE)
     public State delete_topic_state(){
         return new DeleteThemeState();
     }
 
+    @Bean(name = SHOW_ALL_MENTORS_STATE)
+    public State show_mentors(){
+        return new ShowAllMentors();
+    }
+
+    @Bean(name = SHOW_ACCEPTED_MENTORS_STATE)
+    public State show_accepted_mentors(){
+        return new ShowAcceptedMentors();
+    }
     @Bean(name = THEME_SUMMARY_STATE)
     public State theme_summaru_state(){
         return new SummaryState();
