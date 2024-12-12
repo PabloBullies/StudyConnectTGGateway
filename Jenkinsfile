@@ -53,7 +53,7 @@ pipeline {
                 script {
                     sh 'docker rm -f study-tg-gateway-prod || true'
                     withCredentials([string(credentialsId: 'study-connect-tg-token', variable: 'TOKEN')]) {
-                        sh "docker run --restart always --name study-tg-gateway-prod --network master-prod-network -d owa.gigachadus.ru/study-tg-gateway-prod:latest --master.uri=study-master-prod:8080 --bot.token=$TOKEN"
+                        sh "docker run --restart always --name study-tg-gateway-prod --network master-prod-network -d owa.gigachadus.ru/study-tg-gateway:latest --master.uri=study-master-prod:8080 --bot.token=$TOKEN"
                     }
                 }
             }
